@@ -2,3 +2,4 @@
 require 'serialport'
 
 require_relative 'xbee/version'
+require_relative 'xbee/xbee'

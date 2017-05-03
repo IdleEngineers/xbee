@@ -1,21 +1,10 @@
-=begin
+# frozen_string_literal: true
+require_relative 'spec_helper'
 
-This file is part of the xbee-ruby gem.
-
-Copyright 2013-2014 Dirk Grappendorf, www.grappendorf.net
-
-Licensed under the The MIT License (MIT)
-
-=end
-
-require 'spec_helper'
-
-module XBeeRuby
-
+module XBee
 	describe XBee do
-
 		let!(:serial) { double('SerialPort').as_null_object }
-		let!(:xbee) { XBee.new port: '/dev/ttyS0', rate: 57600 }
+		let!(:xbee) { XBee.new device_path: '/dev/ttyS0', rate: 57600 }
 
 		before { allow(SerialPort).to receive(:create).and_return serial }
 
@@ -99,5 +88,4 @@ module XBeeRuby
 			end
 		end
 	end
-
 end

@@ -1,26 +1,16 @@
-=begin
+# frozen_string_literal: true
+require_relative 'request'
 
-This file is part of the xbee-ruby gem.
-
-Copyright 2013-2014 Dirk Grappendorf, www.grappendorf.net
-
-Licensed under the The MIT License (MIT)
-
-=end
-
-require 'xbee-ruby/request'
-
-module XBeeRuby
-
+module XBee
 	class TxRequest < Request
-
 		attr_reader :address64
 		attr_reader :address16
 		attr_reader :data
 		attr_reader :options
 		attr_reader :radius
 
-		def initialize address64, data, opt = {}
+
+		def initialize(address64, data, opt = {})
 			super 0x10
 			@address64 = address64
 			@data = data
@@ -30,11 +20,9 @@ module XBeeRuby
 			@radius = opt[:radius] || 0
 		end
 
+
 		def frame_data
 			@address64.to_a + @address16.to_a + [@radius, @options] + @data
 		end
-
 	end
-
 end
-

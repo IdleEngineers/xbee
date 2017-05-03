@@ -1,19 +1,8 @@
-=begin
+# frozen_string_literal: true
+require_relative 'spec_helper'
 
-This file is part of the xbee-ruby gem.
-
-Copyright 2013-2014 Dirk Grappendorf, www.grappendorf.net
-
-Licensed under the The MIT License (MIT)
-
-=end
-
-require 'spec_helper'
-
-module XBeeRuby
-
+module XBee
 	describe Address64 do
-
 		subject { Address64.new 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88 }
 
 		describe '#to_s' do
@@ -67,7 +56,5 @@ module XBeeRuby
 		describe '::COORDINATOR' do
 			specify { Address64::COORDINATOR.should == Address64.new(0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) }
 		end
-
 	end
-
 end
