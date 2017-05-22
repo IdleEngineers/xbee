@@ -32,6 +32,7 @@ module XBee
 			attr_reader :address16
 			attr_reader :address64
 			attr_reader :data
+			attr_reader :receive_options
 
 			# [XBee::Packet] if this frame was received, it'll belong to a Packet. (Frames prepped for transmit have no Packet association.)
 			attr_reader :packet

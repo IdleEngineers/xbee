@@ -5,6 +5,11 @@ module XBee
 	module Frames
 		class ZigBeeIODataSampleRxIndicator < Frame
 			api_id 0x92
+
+
+			def initialize(packet: nil)
+
+			end
 		end
 	end
 end
