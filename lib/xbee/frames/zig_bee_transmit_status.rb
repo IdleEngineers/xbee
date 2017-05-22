@@ -4,7 +4,7 @@ require_relative 'frame'
 module XBee
 	module Frames
 		class ZigBeeTransmitStatus < Frame
-			API_ID = 0x8B
+			api_id 0x8B
 		end
 	end
 end

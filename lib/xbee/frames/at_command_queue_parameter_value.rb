@@ -4,7 +4,7 @@ require_relative 'frame'
 module XBee
 	module Frames
 		class ATCommandQueueParameterValue < Frame
-			API_ID = 0x09
+			api_id 0x09
 		end
 	end
 end

@@ -1,9 +1,18 @@
 # frozen_string_literal: true
+require 'comparable'
 
 module XBee
 	class Address
-		def to_a
-			raise 'Override to return the address as a byte array'
+		include Comparable
+
+
+		def <=>(other)
+			to_a <=> other.to_a
+		end
+
+
+		def ==(other)
+			to_a == other.to_a
 		end
 	end
 end

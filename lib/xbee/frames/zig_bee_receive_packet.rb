@@ -4,7 +4,7 @@ require_relative 'frame'
 module XBee
 	module Frames
 		class ZigBeeReceivePacket < Frame
-			API_ID = 0x90
+			api_id 0x90
 		end
 	end
 end

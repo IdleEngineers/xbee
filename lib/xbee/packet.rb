@@ -6,11 +6,14 @@ module XBee
 		ESCAPE = 0x7D
 		XON = 0x11
 		XOFF = 0x13
+		ESCAPE_BYTES = [
+			START_BYTE, ESCAPE, XON, XOFF
+		].freeze
 
 		class << self
 			# @param byte [Integer]
 			def special_byte?(byte)
-				[START_BYTE, ESCAPE, XON, XOFF].include? byte
+				ESCAPE_BYTES.include? byte
 			end
 
 
@@ -66,7 +69,7 @@ module XBee
 					loop until bytes.next == START_BYTE
 					length = (next_unescaped_byte(bytes) << 8) + next_unescaped_byte(bytes)
 				rescue
-					raise IOError, 'Packet is too short, unable to read length fields'
+					raise IOError, 'Packet is too short, unable to read length fields.'
 				end
 				begin
 					data = (1..length).map { next_unescaped_byte bytes }
@@ -79,7 +82,7 @@ module XBee
 					raise IOError, 'Packet is too short, unable to read checksum'
 				end
 				if crc != Packet::checksum(data) then
-					raise IOError, "Excpected checksum to be 0x#{Packet::checksum(data).to_s 16} but was 0x#{crc.to_s 16}"
+					raise IOError, "Expected checksum to be 0x#{Packet.checksum(data).to_s 16} but was 0x#{crc.to_s 16}"
 				end
 				Packet.new data
 			end
@@ -113,17 +116,18 @@ module XBee
 
 
 		def bytes_escaped
-			[START_BYTE] + bytes[1..-1].flat_map { |b|
-				if Packet.special_byte?(b) then
+			[START_BYTE] + bytes[1..-1].flat_map do |b|
+				if Packet.special_byte?(b)
 					[ESCAPE, 0x20 ^ b]
 				else
 					b
-				end }
+				end
+			end
 		end
 
 
 		def ==(other)
-			self.data == other.data
+			data == other.data
 		end
 
 

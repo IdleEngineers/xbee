@@ -25,4 +25,5 @@ Gem::Specification.new do |spec|
 	spec.add_development_dependency 'rake', '~> 10.0'
 
 	spec.add_dependency 'serialport', '>= 1.1.0'
+	spec.add_dependency 'semantic_logger'
 end

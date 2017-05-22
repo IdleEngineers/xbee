@@ -4,7 +4,7 @@ require_relative 'frame'
 module XBee
 	module Frames
 		class XBeeSensorReadIndicator < Frame
-			API_ID = 0x94
+			api_id 0x94
 		end
 	end
 end

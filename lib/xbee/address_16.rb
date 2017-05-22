@@ -1,46 +1,45 @@
 # frozen_string_literal: true
-require_relative 'adress'
+require 'comparable'
+
+require_relative 'address'
 
 module XBee
 	class Address16 < Address
-		def initialize msb, lsb
-			@address = [msb, lsb]
+		def initialize(msb, lsb)
+			@bytes = [msb, lsb]
 		end
 
 
-		def self.from_s string
-			if matcher = /^(\h\h)[^\h]*(\h\h)$/.match(string)
-				self.new *(matcher[1..2].map &:hex)
-			else
-				raise ArgumentError, "#{string} is not a valid 16-bit address string"
+		class << self
+			def from_string(string)
+				if (matcher = /^(\h\h)[^\h]*(\h\h)$/.match(string))
+					new *(matcher[1..2].map &:hex)
+				else
+					raise ArgumentError, "#{string} is not a valid 16-bit address string"
+				end
 			end
-		end
 
 
-		def self.from_a array
-			if array.length == 2 && array.all? { |x| (0..255).cover? x }
-				self.new *array
-			else
-				raise ArgumentError, "#{array.inspect} is not a valid 16-bit address array"
+			def from_array(array)
+				if array.length == 2 && array.all? { |x| (0..255).cover? x }
+					new *array
+				else
+					raise ArgumentError, "#{array.inspect} is not a valid 16-bit address array"
+				end
 			end
 		end
 
 
 		def to_s
-			'%02x%02x' % @address
+			'%02x%02x' % @bytes
 		end
 
 
 		def to_a
-			@address
+			@bytes
 		end
 
 
-		def == other
-			to_a == other.to_a
-		end
-
-
-		BROADCAST = Address16.new 0xff, 0xfe
+		BROADCAST = new 0xff, 0xfe
 	end
 end

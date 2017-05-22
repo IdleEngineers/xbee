@@ -5,7 +5,7 @@ require_relative '../lib/xbee'
 
 serial = double('SerialPort').as_null_object
 xbee = XBee::XBee.new device_path: '/dev/ttyS0', rate: 57600
-xbee.serial = serial
+xbee.io = serial
 xbee.open
 num_reads = 0
 start_time = Time.now.to_f

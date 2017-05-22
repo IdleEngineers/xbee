@@ -4,7 +4,7 @@ require_relative 'frame'
 module XBee
 	module Frames
 		class CreateSourceRoute < Frame
-			API_ID = 0x21
+			api_id 0x21
 		end
 	end
 end

@@ -1,15 +1,15 @@
 # frozen_string_literal: true
-require_relative 'adress'
+require_relative 'address'
 
 module XBee
 	class Address64 < Address
 		def initialize(b1, b2, b3, b4, b5, b6, b7, b8)
-			@address = [b1, b2, b3, b4, b5, b6, b7, b8]
+			@bytes = [b1, b2, b3, b4, b5, b6, b7, b8]
 		end
 
 
 		class << self
-			def from_s(string)
+			def from_string(string)
 				if (matcher = /^(\h\h)[^\h]*(\h\h)[^\h]*(\h\h)[^\h]*(\h\h)[^\h]*(\h\h)[^\h]*(\h\h)[^\h]*(\h\h)[^\h]*(\h\h)$/.match(string))
 					new *(matcher[1..8].map &:hex)
 				else
@@ -18,7 +18,7 @@ module XBee
 			end
 
 
-			def from_a(array)
+			def from_array(array)
 				if array.length == 8 && array.all? { |x| (0..255).cover? x }
 					new *array
 				else
@@ -29,21 +29,16 @@ module XBee
 
 
 		def to_a
-			@address
-		end
-
-
-		def ==(other)
-			to_a == other.to_a
+			@bytes
 		end
 
 
 		def to_s
-			('%02x' * 8) % @address
+			('%02x' * 8) % @bytes
 		end
 
 
-		BROADCAST = Address64.new 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff
-		COORDINATOR = Address64.new 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+		BROADCAST = new 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff
+		COORDINATOR = new 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 	end
 end

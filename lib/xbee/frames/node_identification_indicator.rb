@@ -4,7 +4,7 @@ require_relative 'frame'
 module XBee
 	module Frames
 		class NodeIdentificationIndicator < Frame
-			API_ID = 0x95
+			api_id 0x95
 		end
 	end
 end
