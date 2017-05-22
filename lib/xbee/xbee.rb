@@ -1,6 +1,28 @@
 # frozen_string_literal: true
 require 'semantic_logger'
+
 require_relative 'packet'
+require_relative 'frames/at_command'
+require_relative 'frames/at_command_queue_parameter_value'
+require_relative 'frames/at_command_response'
+require_relative 'frames/create_source_route'
+require_relative 'frames/explicit_addressing_zig_bee_command_frame'
+require_relative 'frames/extended_modem_status'
+require_relative 'frames/many_to_one_route_request_indicator'
+require_relative 'frames/modem_status'
+require_relative 'frames/node_identification_indicator'
+require_relative 'frames/over_the_air_firmware_update_status'
+require_relative 'frames/remote_command_request'
+require_relative 'frames/remote_command_response'
+require_relative 'frames/route_record_indicator'
+require_relative 'frames/x_bee_sensor_read_indicator'
+require_relative 'frames/zig_bee_explicit_rx_indicator'
+require_relative 'frames/zig_bee_io_data_sample_rx_indicator'
+require_relative 'frames/zig_bee_receive_packet'
+require_relative 'frames/zig_bee_transmit_request'
+require_relative 'frames/zig_bee_transmit_status'
+
+
 
 module XBee
 	# Either specify the port and serial parameters
@@ -67,7 +89,7 @@ module XBee
 
 
 		def read_frame
-			Response.from_packet read_packet
+			Frames::Frame.from_packet read_packet
 		end
 
 

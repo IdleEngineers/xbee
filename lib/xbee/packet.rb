@@ -50,13 +50,13 @@ module XBee
 				if crc != data[-1]
 					raise ArgumentError, "Expected checksum to be 0x#{crc.to_s 16} but was 0x#{data[-1].to_s 16}"
 				end
-				self.new data[3..-2]
+				new data[3..-2]
 			end
 
 
 			def next_unescaped_byte(bytes)
 				byte = bytes.next
-				if byte == ESCAPE then
+				if byte == ESCAPE
 					0x20 ^ bytes.next
 				else
 					byte
@@ -81,10 +81,10 @@ module XBee
 				rescue
 					raise IOError, 'Packet is too short, unable to read checksum'
 				end
-				if crc != Packet::checksum(data) then
-					raise IOError, "Expected checksum to be 0x#{Packet.checksum(data).to_s 16} but was 0x#{crc.to_s 16}"
+				if crc != checksum(data)
+					raise IOError, "Expected checksum to be 0x#{checksum(data).to_s 16} but was 0x#{crc.to_s 16}"
 				end
-				Packet.new data
+				new data
 			end
 		end
 

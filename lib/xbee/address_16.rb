@@ -1,6 +1,4 @@
 # frozen_string_literal: true
-require 'comparable'
-
 require_relative 'address'
 
 module XBee
