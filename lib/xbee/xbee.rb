@@ -17,9 +17,9 @@ require_relative 'frames/remote_command_response'
 require_relative 'frames/route_record_indicator'
 require_relative 'frames/x_bee_sensor_read_indicator'
 require_relative 'frames/zig_bee_explicit_rx_indicator'
-require_relative 'frames/zig_bee_io_data_sample_rx_indicator'
+require_relative 'frames/data_sample_rx_indicator'
 require_relative 'frames/zig_bee_receive_packet'
-require_relative 'frames/zig_bee_transmit_request'
+require_relative 'frames/transmit_request'
 require_relative 'frames/zig_bee_transmit_status'
 
 

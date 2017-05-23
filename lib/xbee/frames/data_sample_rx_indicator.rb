@@ -4,7 +4,7 @@ require_relative 'data/data_sample'
 
 module XBee
 	module Frames
-		class ZigBeeIODataSampleRxIndicator < Frame
+		class DataSampleRxIndicator < Frame
 			api_id 0x92
 
 			attr_reader :address16

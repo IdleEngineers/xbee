@@ -21,7 +21,7 @@ class TestZigBeeIODataSampleRXIndicator < Minitest::Test
 		packet = XBee::Packet.from_bytes input
 		actual = XBee::Frames::Frame.from_packet packet
 
-		assert_instance_of XBee::Frames::ZigBeeIODataSampleRxIndicator, actual
+		assert_instance_of XBee::Frames::DataSampleRxIndicator, actual
 		assert_equal [0x00, 0x13, 0xa2, 0x00, 0x40, 0x8b, 0xac, 0xe4], actual.address64.to_a
 		assert_equal [0x0b, 0xf6], actual.address16.to_a
 		assert_equal 0x01, actual.receive_options
