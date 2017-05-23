@@ -29,10 +29,7 @@ module XBee
 			end
 
 
-			attr_reader :address16
-			attr_reader :address64
-			attr_reader :data
-			attr_reader :receive_options
+			attr_reader :raw_data
 
 			# [XBee::Packet] if this frame was received, it'll belong to a Packet. (Frames prepped for transmit have no Packet association.)
 			attr_reader :packet
@@ -40,14 +37,10 @@ module XBee
 
 			def initialize(packet: nil)
 				logger.trace 'Initializing...', packet: packet
-
+				@packet = packet
 				if packet
-					@packet = packet
-					bytes = packet.data
-					@address64 = Address64.new *bytes[1..8]
-					@address16 = Address16.new *bytes[9..10]
-					@receive_options = bytes[11]
-					@data = bytes[12..-1]
+					@raw_data = packet.data.dup
+					@frame_type = @raw_data.shift
 				end
 			end
 		end
