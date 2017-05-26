@@ -3,6 +3,8 @@ require_relative '../test_helper'
 require 'xbee'
 
 class TestATCommand < Minitest::Test
+	UUT = XBee::Frames::ATCommand
+
 	def test_packet_parsing
 		# Start delimiter: 7E
 		# Length: 00 04 (4)
@@ -18,5 +20,16 @@ class TestATCommand < Minitest::Test
 		assert_equal [0x4e, 0x4a], actual.command_bytes
 		# assert_equal 'NJ', actual.command
 		assert_empty actual.parameter_bytes
+	end
+
+
+	def test_bytes
+		uut = UUT.new
+		uut.id = 0x11
+		uut.command_bytes = [0x44, 0x55]
+		uut.parameter_bytes = [0x66, 0x67, 0x68]
+
+		actual = uut.bytes
+		assert_equal [0x08, 0x11, 0x44, 0x55, 0x66, 0x67, 0x68], actual
 	end
 end

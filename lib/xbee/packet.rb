@@ -117,7 +117,7 @@ module XBee
 
 		def bytes_escaped
 			[START_BYTE] + bytes[1..-1].flat_map do |b|
-				if Packet.special_byte?(b)
+				if self.class.special_byte?(b)
 					[ESCAPE, 0x20 ^ b]
 				else
 					b

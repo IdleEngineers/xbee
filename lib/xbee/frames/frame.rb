@@ -19,6 +19,14 @@ module XBee
 				def api_id(byte)
 					@@frame_types ||= {}
 					@@frame_types[byte] = self
+
+					define_singleton_method(:frame_type) do
+						byte
+					end
+
+					define_method(:frame_type) do
+						byte
+					end
 				end
 
 
@@ -29,19 +37,22 @@ module XBee
 			end
 
 
-			attr_reader :raw_data
-
 			# [XBee::Packet] if this frame was received, it'll belong to a Packet. (Frames prepped for transmit have no Packet association.)
 			attr_reader :packet
 
-
+			# Subclasses should shift +@parse_bytes+ as necessary to get their data fields.
 			def initialize(packet: nil)
 				logger.trace 'Initializing...', packet: packet
 				@packet = packet
 				if packet
-					@raw_data = packet.data.dup
-					@frame_type = @raw_data.shift
+					@parse_bytes = packet.data.dup
+					@frame_type = @parse_bytes.shift
 				end
+			end
+
+
+			def bytes
+				[frame_type]
 			end
 		end
 	end
