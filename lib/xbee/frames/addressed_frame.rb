@@ -7,7 +7,6 @@ module XBee
 
 			attr_accessor :address16
 			attr_accessor :address64
-			attr_accessor :broadcast_radius
 
 
 			def initialize(packet: nil)
@@ -16,7 +15,6 @@ module XBee
 				if @parse_bytes
 					@address64 = Address64.new *@parse_bytes.shift(8)
 					@address16 = Address16.new *@parse_bytes.shift(2)
-					@broadcast_radius = @parse_bytes.shift
 				end
 			end
 
