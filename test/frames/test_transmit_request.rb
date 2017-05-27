@@ -11,7 +11,7 @@ class TestTransmitRequest < Minitest::Test
 		packet = XBee::Packet.from_bytes input
 		actual = XBee::Frames::Frame.from_packet packet
 
-		assert_instance_of XBee::Frames::TransmitRequest, actual
+		assert_instance_of UUT, actual
 		assert_equal 0x01, actual.id
 		assert_equal XBee::Address64.new(0x00, 0x13, 0xA2, 0x00, 0x40, 0x0A, 0x01, 0x27), actual.address64
 		assert_equal XBee::Address16.new(0xFF, 0xFE), actual.address16

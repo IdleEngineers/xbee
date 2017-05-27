@@ -6,8 +6,7 @@ module XBee
 		class ATCommandResponse < IdentifiedFrame
 			api_id 0x88
 
-
-			attr_accessor :at_command
+			attr_accessor :command
 			attr_accessor :status
 			attr_accessor :data
 
@@ -16,7 +15,7 @@ module XBee
 				super
 
 				if @parse_bytes
-					@at_command = @parse_bytes.shift 2
+					@command = @parse_bytes.shift 2
 					@status = @parse_bytes.shift
 					@data = @parse_bytes
 					@parse_bytes = []
@@ -25,7 +24,7 @@ module XBee
 
 
 			def bytes
-				super + (at_command || [0x00] * 2) + [status || 0x00] + (data || [])
+				super + (command || [0x00] * 2) + [status || 0x00] + (data || [])
 			end
 		end
 	end

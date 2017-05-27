@@ -18,6 +18,7 @@ module XBee
 				# Registers the frame type
 				def api_id(byte)
 					@@frame_types ||= {}
+					raise "Attempted to redefine API ID #{byte.inspect}" if @@frame_types.has_key? byte
 					@@frame_types[byte] = self
 
 					define_singleton_method(:frame_type) do

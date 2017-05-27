@@ -11,7 +11,7 @@ class TestATCommandQueueParameterValue < Minitest::Test
 		packet = XBee::Packet.from_bytes input
 		actual = XBee::Frames::Frame.from_packet packet
 
-		assert_instance_of XBee::Frames::ATCommandQueueParameterValue, actual
+		assert_instance_of UUT, actual
 		assert_equal 0x01, actual.id
 		assert_equal [0x42, 0x44], actual.command_bytes
 		assert_equal [0x07], actual.parameter_bytes

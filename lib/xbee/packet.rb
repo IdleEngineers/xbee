@@ -6,6 +6,9 @@ module XBee
 		ESCAPE = 0x7D
 		XON = 0x11
 		XOFF = 0x13
+
+		ESCAPE_XOR = 0x20
+
 		ESCAPE_BYTES = [
 			START_BYTE, ESCAPE, XON, XOFF
 		].freeze
@@ -22,8 +25,33 @@ module XBee
 			end
 
 
+			# Escapes an array of bytes. Ignores the first byte unless ignore_first_byte is set to false in the options hash.
+			# @param bytes [Array<Integer>] The array of bytes to escape.
+			# @param options [Hash] Options hash.
+			# @option options [Boolean] :ignore_first_byte If the first byte should be ignored (usually true for handling an entire packet since the first byte is START_BYTE). Default true.
+			# @return [Array<Integer>] Escaped bytes.
+			def escape(bytes, options = {})
+				ignore_first_byte = options.fetch :ignore_first_byte, true
+
+				prepend = []
+				if ignore_first_byte
+					bytes = bytes.dup
+					prepend = [bytes.shift]
+				end
+
+				prepend + bytes.reduce([]) do |escaped, b|
+					if ESCAPE_BYTES.include?(b)
+						escaped << ESCAPE
+						escaped << (ESCAPE_XOR ^ b)
+					else
+						escaped << b
+					end
+				end
+			end
+
+
 			def unescape(bytes)
-				bytes.inject([]) do |unescaped, b|
+				bytes.reduce([]) do |unescaped, b|
 					if unescaped.last == ESCAPE
 						unescaped.pop
 						unescaped << (0x20 ^ b)

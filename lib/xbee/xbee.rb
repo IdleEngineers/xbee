@@ -20,7 +20,7 @@ require_relative 'frames/zig_bee_explicit_rx_indicator'
 require_relative 'frames/data_sample_rx_indicator'
 require_relative 'frames/zig_bee_receive_packet'
 require_relative 'frames/transmit_request'
-require_relative 'frames/zig_bee_transmit_status'
+require_relative 'frames/transmit_status'
 
 
 

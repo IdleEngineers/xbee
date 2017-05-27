@@ -37,6 +37,11 @@ module XBee
 					'Ember ZigBee stack error'
 				end
 			end
+
+
+			def bytes
+				super + [status || 0x00]
+			end
 		end
 	end
 end

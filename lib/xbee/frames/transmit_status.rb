@@ -3,12 +3,13 @@ require_relative 'identified_frame'
 
 module XBee
 	module Frames
+		# When a Transmit Request (0x10, 0x11) completes, the device sends a Transmit Status message out of
+		# the serial interface. This message indicates if the Transmit Request was successful or if it failed.
 		class TransmitStatus < IdentifiedFrame
 			api_id 0x8b
 
-
 			attr_accessor :address16
-			attr_accessor :transmit_retry_count
+			attr_accessor :retry_count
 			attr_accessor :delivery_status
 			attr_accessor :discovery_status
 
@@ -47,10 +48,15 @@ module XBee
 
 				if @parse_bytes
 					@address16 = Address16.new *@parse_bytes.shift(2)
-					@transmit_retry_count = @parse_bytes.shift
+					@retry_count = @parse_bytes.shift
 					@delivery_status = @parse_bytes.shift
 					@discovery_status = @parse_bytes.shift
 				end
+			end
+
+
+			def bytes
+				super + (address16 || [0xff, 0xfd]).to_a + [retry_count || 0x00] + [delivery_status || 0x00] + [discovery_status || 0x00]
 			end
 		end
 	end

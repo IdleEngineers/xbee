@@ -3,6 +3,8 @@ require_relative '../test_helper'
 require 'xbee'
 
 class TestZigBeeIODataSampleRXIndicator < Minitest::Test
+
+
 	def test_packet_parsing
 		# Start delimiter: 7E
 		# Length: 00 12 (18)
@@ -21,7 +23,7 @@ class TestZigBeeIODataSampleRXIndicator < Minitest::Test
 		packet = XBee::Packet.from_bytes input
 		actual = XBee::Frames::Frame.from_packet packet
 
-		assert_instance_of XBee::Frames::DataSampleRxIndicator, actual
+		assert_instance_of UUT, actual
 		assert_equal [0x00, 0x13, 0xa2, 0x00, 0x40, 0x8b, 0xac, 0xe4], actual.address64.to_a
 		assert_equal [0x0b, 0xf6], actual.address16.to_a
 		assert_equal 0x01, actual.receive_options
