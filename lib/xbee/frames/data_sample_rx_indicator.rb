@@ -14,19 +14,26 @@ module XBee
 			# [Array<Data::DataSample>] Array of sample objects
 			attr_reader :samples
 
+
+			RECEIVE_OPTIONS = {
+				0x01 => :acknowledged,
+				0x02 => :broadcast,
+			}.freeze
+
 			def initialize(packet: nil)
 				@samples = []
 
 				super
 
-				if raw_data
-					input = raw_data.dup
-					@address64 = Address64.new *input.shift(8)
-					@address16 = Address16.new *input.shift(2)
-					@receive_options = input.shift
-					@number_of_samples = input.shift
+				if @parse_bytes
+					@address64 = Address64.new *@parse_bytes.shift(8)
+					@address16 = Address16.new *@parse_bytes.shift(2)
+					# reserved
+					@parse_bytes.shift 2
+					@receive_options = @parse_bytes.shift
+					@number_of_samples = @parse_bytes.shift
 					@number_of_samples.times do
-						@samples << Data::DataSample.new(bytes: input)
+						@samples << Data::DataSample.new(parse_bytes: @parse_bytes)
 					end
 				end
 			end

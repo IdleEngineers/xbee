@@ -1,10 +1,12 @@
 # frozen_string_literal: true
-require_relative 'frame'
+require_relative 'addressed_frame'
 
 module XBee
 	module Frames
-		class CreateSourceRoute < Frame
+		class CreateSourceRoute < AddressedFrame
 			api_id 0x21
+
+			# TODO: Not implemented
 		end
 	end
 end

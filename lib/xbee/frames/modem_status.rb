@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require_relative 'frame'
-require_relative 'data/data_sample'
 
 module XBee
 	module Frames
@@ -19,17 +18,14 @@ module XBee
 				0x11 => 'Modem configuration changed while join in progress',
 			}
 
-			attr_accessor :status_byte
+			attr_accessor :status
 
 
 			def initialize(packet: nil)
-				@samples = []
-
 				super
 
-				if raw_data
-					input = raw_data.dup
-					@status_byte = input.shift
+				if @parse_bytes
+					@status = @parse_bytes.shift
 				end
 			end
 

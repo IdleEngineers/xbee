@@ -37,16 +37,15 @@ module XBee
 				]
 
 
-				attr_reader :data
 				attr_reader :digital_values
 				attr_reader :analog_values
 
 
 				# Parses the input bytes into @digital_values and @analog_values.
 				# Consumes the bytes read, so the next sample can be constructed.
-				# @param bytes [Array<Integer>] Input data.
-				def initialize(bytes:)
-					input = bytes
+				# @param parse_bytes [Array<Integer>] Input data.
+				def initialize(parse_bytes:)
+					input = parse_bytes
 					@digital_channel_mask = (input.shift << 8) + input.shift
 					@analog_channel_mask = input.shift
 

@@ -17,8 +17,6 @@ module XBee
 
 
 			def initialize(packet: nil)
-				@samples = []
-
 				super
 
 				if @parse_bytes
