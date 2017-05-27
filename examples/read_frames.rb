@@ -20,8 +20,15 @@ require 'xbee'
 class ReadFrames
 	include SemanticLogger::Loggable
 
+
+	def initialize(device_path: '/dev/ttyUSB1', rate: 115200)
+		@device_path = device_path
+		@rate = rate
+	end
+
+
 	def run
-		xbee = XBee::XBee.new device_path: '/dev/ttyUSB1', rate: 115200
+		xbee = XBee::XBee.new device_path: @device_path, rate: @rate
 		xbee.open
 		loop do
 			frame = xbee.read_frame
@@ -30,5 +37,12 @@ class ReadFrames
 	end
 end
 
+reader = begin
+	if ARGV.length == 2
+		ReadFrames.new device_path: ARGV[0], rate: ARGV[1].to_i
+	else
+		ReadFrames.new
+	end
+end
 
-ReadFrames.new.run if $0 == __FILE__
+reader.run if $0 == __FILE__
