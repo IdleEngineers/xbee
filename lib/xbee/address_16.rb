@@ -38,6 +38,7 @@ module XBee
 		end
 
 
-		BROADCAST = new 0xff, 0xfe
+		BROADCAST = new(0xff, 0xfe).freeze
+		COORDINATOR = new(0x00, 0x00).freeze
 	end
 end
