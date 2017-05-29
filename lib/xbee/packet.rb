@@ -50,14 +50,23 @@ module XBee
 			end
 
 
+			# When provided a byte array that has escaped data, this returns a new byte array with just the raw data.
+			# @param bytes [Array<Integer>] Array of bytes to unescape.
+			# @return [Array<Integer>] Array of unescaped bytes.
 			def unescape(bytes)
+				byte_escaped = false
 				bytes.reduce([]) do |unescaped, b|
-					if unescaped.last == ESCAPE
-						unescaped.pop
+					if byte_escaped
 						unescaped << (0x20 ^ b)
+						byte_escaped = false
 					else
-						unescaped << b
+						if b == ESCAPE
+							byte_escaped = true
+						else
+							unescaped << b
+						end
 					end
+					unescaped
 				end
 			end
 
