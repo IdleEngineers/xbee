@@ -9,7 +9,6 @@ require_relative 'frames/create_source_route'
 require_relative 'frames/data_sample_rx_indicator'
 require_relative 'frames/explicit_addressing_command'
 require_relative 'frames/explicit_rx_indicator'
-require_relative 'frames/extended_modem_status'
 require_relative 'frames/many_to_one_route_request_indicator'
 require_relative 'frames/modem_status'
 require_relative 'frames/node_identification_indicator'
@@ -20,7 +19,7 @@ require_relative 'frames/remote_command_response'
 require_relative 'frames/route_record_indicator'
 require_relative 'frames/transmit_request'
 require_relative 'frames/transmit_status'
-require_relative 'frames/x_bee_sensor_read_indicator'
+require_relative 'frames/xbee_sensor_read_indicator'
 
 
 module XBee

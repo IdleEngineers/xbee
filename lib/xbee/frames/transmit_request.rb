@@ -63,7 +63,7 @@ module XBee
 
 
 			def bytes
-				super + [options || 0x00] + (data || [])
+				super + [broadcast_radius || 0x00] + [options || 0x00] + (data || [])
 			end
 		end
 	end

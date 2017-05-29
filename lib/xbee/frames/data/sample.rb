@@ -3,7 +3,7 @@
 module XBee
 	module Frames
 		module Data
-			class DataSample
+			class Sample
 				# Bit-mapping of digital channel names
 				DIGITAL_CHANNELS = [
 					:na,

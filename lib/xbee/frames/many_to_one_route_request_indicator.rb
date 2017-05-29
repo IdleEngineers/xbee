@@ -1,10 +1,11 @@
 # frozen_string_literal: true
-require_relative 'frame'
+require_relative 'unidentified_addressed_frame'
 
 module XBee
 	module Frames
-		class ManyToOneRouteRequestIndicator < Frame
+		class ManyToOneRouteRequestIndicator < UnidentifiedAddressedFrame
 			api_id 0xA3
+
 		end
 	end
 end

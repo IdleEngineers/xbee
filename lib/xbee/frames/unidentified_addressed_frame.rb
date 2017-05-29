@@ -1,10 +1,9 @@
 # frozen_string_literal: true
-require_relative 'identified_frame'
+require_relative 'frame'
 
 module XBee
 	module Frames
-		class AddressedFrame < IdentifiedFrame
-
+		class UnidentifiedAddressedFrame < Frame
 			attr_accessor :address16
 			attr_accessor :address64
 
