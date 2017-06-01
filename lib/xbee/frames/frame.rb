@@ -55,6 +55,11 @@ module XBee
 			def bytes
 				[frame_type]
 			end
+
+
+			def to_packet
+				@packet = Packet.new bytes
+			end
 		end
 	end
 end

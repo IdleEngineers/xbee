@@ -6,12 +6,14 @@ require 'semantic_logger'
 require 'trollop'
 
 @options = Trollop.options do
-	# opt :log_path, 'Path for log file', default: '/var/log/xbee/dump_packets.log', type: :string
-	opt :log_level, 'Logging level - trace, debug, info, warn, error, fatal', default: 'trace', type: :string, callback: lambda { |s| raise Trollop::CommandlineError, 'Invalid logging level specified' unless SemanticLogger::LEVELS.include? s.to_sym}
+	opt :device, 'Path to serial device', default: '/dev/ttyUSB0', type: :string
+	opt :baud, 'Baud rate for XBee radio', default: 115200, type: :integer
+	opt :log_path, 'Path for log file', default: nil, type: :string
+	opt :log_level, 'Logging level - trace, debug, info, warn, error, fatal', default: 'debug', type: :string, callback: lambda { |s| raise Trollop::CommandlineError, 'Invalid logging level specified' unless SemanticLogger::LEVELS.include? s.to_sym}
 end
 
 SemanticLogger.default_level = @options.log_level.to_sym
-# SemanticLogger.add_appender file_name: @options.log_path, formatter: :color
+SemanticLogger.add_appender file_name: @options.log_path, formatter: :color if @options.log_path
 SemanticLogger.add_appender io: $stdout, formatter: :color
 
 
@@ -21,7 +23,7 @@ class ReadFrames
 	include SemanticLogger::Loggable
 
 
-	def initialize(device_path: '/dev/ttyUSB1', rate: 115200)
+	def initialize(device_path: @options.device, rate: @options.baud)
 		@device_path = device_path
 		@rate = rate
 	end
@@ -37,12 +39,7 @@ class ReadFrames
 	end
 end
 
-reader = begin
-	if ARGV.length == 2
-		ReadFrames.new device_path: ARGV[0], rate: ARGV[1].to_i
-	else
-		ReadFrames.new
-	end
+if $0 == __FILE__
+	reader = ReadFrames.new device_path: @options.device, rate: @options.baud
+	reader.run
 end
-
-reader.run if $0 == __FILE__

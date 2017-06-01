@@ -72,6 +72,17 @@ module XBee
 		end
 
 
+		def write_frame(frame)
+			if frame.packet
+				# TODO: Is it right to assume the packet is in sync with the frame?
+				write_packet frame.packet
+			else
+				packet = frame.to_packet
+				write_packet packet
+			end
+		end
+
+
 		def write_request(request)
 			logger.measure_trace('Packet sent.', payload: { bytes: request.packet.bytes }) do
 				write_packet request.packet
