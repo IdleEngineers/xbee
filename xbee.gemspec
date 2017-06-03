@@ -8,11 +8,15 @@ require 'xbee/version'
 Gem::Specification.new do |spec|
 	spec.name = 'xbee'
 	spec.version = XBee::VERSION
-	spec.description = 'A Ruby API for Digi XBee RF Modules'
-	spec.summary = 'A Ruby API for Digi XBee RF Modules'
+	spec.description = 'A Ruby API for sending/receiving API frames with Digi XBee RF Modules.'
+	spec.summary = 'A Ruby API for Digi XBee RF Modules.'
+	spec.email = 'rubygems-xbee@aarontc.com'
 	spec.authors = ['Dirk Grappendorf (http://www.grappendorf.net)', 'Aaron Ten Clay (https://aarontc.com)']
 	spec.homepage = 'https://github.com/IdleEngineers/xbee'
 	spec.license = 'MIT'
+	spec.metadata = {
+		'issue_tracker' => 'https://work.techtonium.com/jira/browse/XBEE',
+	}
 
 	spec.files = `git ls-files -z`.split("\x0").reject do |f|
 		f.match(%r{^(test|spec|features)/})
