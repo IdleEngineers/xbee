@@ -2,8 +2,8 @@
 require_relative '../test_helper'
 require 'xbee'
 
-class TestRemoteCommandResponse < Minitest::Test
-	UUT = XBee::Frames::RemoteCommandResponse
+class TestRemoteATCommandResponse < Minitest::Test
+	UUT = XBee::Frames::RemoteATCommandResponse
 
 
 	def test_packet_parsing
@@ -14,7 +14,7 @@ class TestRemoteCommandResponse < Minitest::Test
 		assert_instance_of UUT, actual
 		assert_equal XBee::Address64.new(0x00, 0x13, 0xa2, 0x00, 0x40, 0x52, 0x2b, 0xaa), actual.address64
 		assert_equal XBee::Address16.new(0x7d, 0x84), actual.address16
-		assert_equal [0x53, 0x4c], actual.command
+		assert_equal [0x53, 0x4c], actual.at_command
 		assert_equal 0x00, actual.status
 		assert_equal [0x40, 0x52, 0x2b, 0xaa], actual.data
 	end

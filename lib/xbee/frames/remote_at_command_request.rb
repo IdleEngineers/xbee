@@ -21,7 +21,7 @@ module XBee
 
 
 			def initialize(packet: nil)
-				@samples = []
+				@address16 = Address16::BROADCAST
 
 				super
 
@@ -31,6 +31,22 @@ module XBee
 					@command_parameter = @parse_bytes
 					@parse_bytes = []
 				end
+			end
+
+
+			# @param value [Array/String] The AT command. Must be two bytes, either an array or a string.
+			def at_command=(value)
+				raise ArgumentError, "AT command must be exactly two bytes (got #{value.inspect})" unless value.length == 2
+				if value.respond_to?(:force_encoding)
+					@at_command = value.dup.force_encoding('ASCII').unpack 'C*'
+				else
+					@at_command = value
+				end
+			end
+
+
+			def bytes
+				super + [remote_command_options || 0x00] + (at_command || [0] * 2) + (command_parameter || [])
 			end
 		end
 	end
