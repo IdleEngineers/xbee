@@ -33,6 +33,14 @@ Example: Receive packets
 		puts "Frame received: #{frame.inspect}"
 	end
 
+Contributing
+------------
+All development happens via Git using the [Git Flow](http://nvie.com/posts/a-successful-git-branching-model/) branching model. The canonical source location is
+[XBee Bitbucket](https://work.techtonium.com/bitbucket/projects/XBEE). This repository is automatically mirrored to [GitHub](https://github.com/IdleEngineers/xbee).
+
+If you find a bug or have a feature request, please create an issue in the [XBee issue tracker](https://work.techtonium.com/jira/browse/XBEE).
+
+
 License
 -------
 
