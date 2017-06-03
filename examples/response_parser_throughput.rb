@@ -1,27 +1,34 @@
-=begin
+# frozen_string_literal: true
 
-This file is part of the xbee-ruby gem.
+require_relative '../lib/xbee'
 
-Copyright 2013-2014 Dirk Grappendorf, www.grappendorf.net
+class FakeIO
+	def initialize
+		@queue = Queue.new
+	end
 
-Licensed under the The MIT License (MIT)
+	def readbyte
+		if @queue.empty?
+			load_queue
+		end
+		@queue.pop
+	end
 
-=end
+	def load_queue
+		[0x7e, 0x00, 0x07, 0x8b, 0x02, 0x79, 0x38, 0x00, 0x00, 0x00, 0xc1].each do |b|
+			@queue.push b
+		end
+	end
+end
 
-require 'rspec/mocks/standalone'
-require_relative '../lib/xbee-ruby'
-
-serial = double('SerialPort').as_null_object
-xbee = XBeeRuby::XBee.new port: '/dev/ttyS0', rate: 57600
-xbee.serial = serial
+xbee = XBee::XBee.new io: FakeIO.new
 xbee.open
 num_reads = 0
 start_time = Time.now.to_f
 end_time = start_time + 10
 puts 'Reading responses from a faked serial connection for 10 seconds'
 while Time.now.to_f < end_time
-	expect(serial).to receive(:readbyte).and_return(0x7e, 0x00, 0x07, 0x8b, 0x02, 0x79, 0x38, 0x00, 0x00, 0x00, 0xc1)
-	xbee.read_response
+	xbee.read_frame
 	num_reads += 1
 end
 puts 'Done'

@@ -1,19 +1,8 @@
-=begin
+# frozen_string_literal: true
+require_relative 'spec_helper'
 
-This file is part of the xbee-ruby gem.
-
-Copyright 2013-2014 Dirk Grappendorf, www.grappendorf.net
-
-Licensed under the The MIT License (MIT)
-
-=end
-
-require 'spec_helper'
-
-module XBeeRuby
-
+module XBee
 	describe Request do
-
 		its(:frame_id) { should == 1 }
 		its(:frame_id) { should_not == Request.new.frame_id }
 
@@ -31,7 +20,5 @@ module XBeeRuby
 			end
 			its (:packet) { should == Packet.new([0xaa, 0x01, 0x12, 0x34, 0x56]) }
 		end
-
 	end
-
 end
