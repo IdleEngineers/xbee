@@ -13,5 +13,11 @@ module XBee
 		def ==(other)
 			to_a == other.to_a
 		end
+
+
+		def to_a
+			@bytes
+		end
+
 	end
 end

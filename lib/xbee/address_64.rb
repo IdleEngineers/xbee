@@ -28,10 +28,6 @@ module XBee
 		end
 
 
-		def to_a
-			@bytes
-		end
-
 
 		def to_s
 			('%02x' * 8) % @bytes

@@ -19,4 +19,17 @@ class TestRemoteATCommandRequest < Minitest::Test
 		assert_equal [0x42, 0x48], actual.at_command
 		assert_equal [0x01], actual.command_parameter
 	end
+
+
+
+	def test_bytes
+		expected = XBee::Packet.unescape bytes('17 01 00 7D 33 A2 00 40 8B AC E4 FF FE 00 4E 49')
+		uut = UUT.new
+		uut.id = 1
+		uut.address64 = XBee::Address64.from_string '00 13 A2 00 40 8B AC E4'
+		uut.at_command = 'NI'
+		actual = uut.bytes
+
+		assert_equal expected, actual
+	end
 end

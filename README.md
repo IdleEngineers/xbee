@@ -6,14 +6,21 @@ A Ruby API for XBee ZigBee-RF-Modules
 
 This gem is forked from the original XBee-Ruby gem. Because major API changes are being made a new name is appropriate.
 
+See the `examples/` directory for some working examples with slightly more complexity than the samples below.
+
+The `spec/` directory is left over from the forked gem, and will be converted to Minitest in the near future.
+
 Example: Transmit a packet to another node
 ------------------------------------------
 
-	xbee = XBee::XBee.new port: '/dev/ttyUSB0', rate: 115200
+	xbee = XBee::XBee.new device_path: '/dev/ttyUSB0', rate: 115200
 	xbee.open
-	request = XBeeRuby::TxRequest.new  XBeeRuby::Address64.new(0x00, 0x13, 0xa2, 0x00, 0x40, 0x4a, 0x50, 0x0c), [0x12, 0x34, 0x56]
-	xbee.write_request request
-	puts xbee.read_response
+	request = XBee::Frames::RemoteATCommandRequest.new
+	request.address64 = XBee::Address64.from_string '0013A232408BACE4'
+	request.at_command = 'NI'
+	request.id = 0x01
+	xbee.write_frame request
+	puts xbee.read_frame
 	xbee.close
 
 Example: Receive packets
@@ -21,14 +28,9 @@ Example: Receive packets
 
 	xbee = XBee::XBee.new port: '/dev/ttyUSB0', rate: 115200
 	xbee.open
-	while true do
-		response = xbee.read_frame # blocking, returns an instance of XBee::Frames::Frame 
-		case response
-			when XBee::Frames::RxResponse
-				puts "Received from #{response.address64}: #{response.data}"
-			else
-				puts "Other response: #{response}"
-		end
+	loop do
+		frame = xbee.read_frame
+		puts "Frame received: #{frame.inspect}"
 	end
 
 License
