@@ -26,7 +26,7 @@ Example: Transmit a packet to another node
 Example: Receive packets
 ------------------------
 
-	xbee = XBee::XBee.new port: '/dev/ttyUSB0', rate: 115200
+	xbee = XBee::XBee.new device_path: '/dev/ttyUSB0', rate: 115200
 	xbee.open
 	loop do
 		frame = xbee.read_frame
